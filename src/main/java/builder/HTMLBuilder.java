@@ -1,6 +1,6 @@
 package builder;
 
-public class HTMLBuilder extends Builder {
+public class HTMLBuilder implements Builder {
     private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
