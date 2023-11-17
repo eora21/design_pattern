@@ -9,6 +9,7 @@ public class Main {
         bookShelf.add(new Book("두번째 책"));
         bookShelf.add(new Book("세번째 책"));
         bookShelf.add(new Book("네번째 책"));
+        bookShelf.add(new Book("다섯번째 책"));
 
         Iterator<Book> iterator = bookShelf.iterator();
         while (iterator.hasNext()) {
