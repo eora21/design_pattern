@@ -1,6 +1,6 @@
 package template_method;
 
-public class CharDisplay extends AbstractDisplay {
+public class CharDisplay implements AbstractDisplay {
     private final char ch;
 
     public CharDisplay(char ch) {
