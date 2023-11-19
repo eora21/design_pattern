@@ -32,8 +32,8 @@ public class Directory extends Entry {
         };
     }
 
-    public Entry add(Entry entry) {
+    public void add(Entry entry) {
         directory.add(entry);
-        return this;
+        entry.updateParent(this);
     }
 }

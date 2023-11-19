@@ -15,5 +15,10 @@ public class Main {
         binDir.add(new File("latex", 20_000));
 
         rootDir.printList();
+
+        File eora21 = new File("eora", 21);
+        binDir.add(eora21);
+
+        eora21.printPath();
     }
 }
