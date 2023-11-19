@@ -31,9 +31,19 @@ public class Main {
         youngjin.add(new File("Composite.java", 200));
 
         gildong.add(new File("memo.text", 300));
+        gildong.add(new File("index.html", 350));
 
         dojun.add(new File("game.doc", 400));
         dojun.add(new File("junk.mail", 500));
         rootDir.accept(visitor);
+
+        System.out.println();
+
+        FileFindVisitor fileFindVisitor = new FileFindVisitor(".html");
+        rootDir.accept(fileFindVisitor);
+
+        for (File file : fileFindVisitor.getFiles()) {
+            System.out.println(file.getDescription());
+        }
     }
 }
