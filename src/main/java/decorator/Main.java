@@ -21,5 +21,15 @@ public class Main {
                 );
 
         complex.show();
+
+        MultiStringDisplay multiStringDisplay = new MultiStringDisplay();
+
+        multiStringDisplay.add("Hi!");
+        multiStringDisplay.add("Good Morning.");
+        multiStringDisplay.add("Good Night!");
+        multiStringDisplay.show();
+
+        new SideBorder(multiStringDisplay, '#').show();
+        new FullBorder(multiStringDisplay).show();
     }
 }
