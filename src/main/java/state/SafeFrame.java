@@ -8,10 +8,8 @@ import java.awt.HeadlessException;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class SafeFrame extends Frame implements ActionListener, Context {
+public class SafeFrame extends Frame implements Context {
     private final TextField textClock = new TextField(60);
     private final TextArea textScreen = new TextArea(10, 60);
     private final Button buttonUse = new Button("금고 사용");
@@ -43,25 +41,10 @@ public class SafeFrame extends Frame implements ActionListener, Context {
         pack();
         setVisible(true);
 
-        buttonUse.addActionListener(this);
-        buttonAlarm.addActionListener(this);
-        buttonPhone.addActionListener(this);
-        buttonExit.addActionListener(this);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonUse) {
-            state.doUse(this);
-        } else if (e.getSource() == buttonAlarm) {
-            state.doAlarm(this);
-        } else if (e.getSource() == buttonPhone) {
-            state.doPhone(this);
-        } else if (e.getSource() == buttonExit) {
-            System.exit(0);
-        } else {
-            System.out.println("ERROR");
-        }
+        buttonUse.addActionListener(e -> state.doUse(this));
+        buttonAlarm.addActionListener(e -> state.doAlarm(this));
+        buttonPhone.addActionListener(e -> state.doPhone(this));
+        buttonExit.addActionListener(e -> System.exit(0));
     }
 
     @Override
