@@ -5,6 +5,7 @@ import command.drawer.DrawCanvas;
 import command.drawer.DrawCommand;
 import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -13,7 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Main extends JFrame implements MouseMotionListener, WindowListener {
+public class Main extends JFrame implements WindowListener {
     private final MacroCommand history = new MacroCommand();
     private final DrawCanvas canvas = new DrawCanvas(400, 400, history);
     private final JButton clearButton = new JButton("Clear");
@@ -22,7 +23,15 @@ public class Main extends JFrame implements MouseMotionListener, WindowListener 
         super(title);
 
         this.addWindowListener(this);
-        canvas.addMouseMotionListener(this);
+        canvas.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                DrawCommand drawCommand = new DrawCommand(canvas, e.getPoint());
+                history.append(drawCommand);
+                drawCommand.execute();
+            }
+        });
+
         clearButton.addActionListener(e -> {
             history.clear();
             canvas.repaint();
@@ -41,24 +50,12 @@ public class Main extends JFrame implements MouseMotionListener, WindowListener 
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
-        DrawCommand drawCommand = new DrawCommand(canvas, e.getPoint());
-        history.append(drawCommand);
-        drawCommand.execute();
-    }
-
-    @Override
     public void windowClosing(WindowEvent e) {
         System.exit(0);
     }
 
     public static void main(String[] args) {
         new Main("Command Pattern Sample");
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
     }
 
     @Override
