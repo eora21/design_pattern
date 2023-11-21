@@ -15,7 +15,7 @@ public class MacroCommand implements Command {
             throw new IllegalArgumentException();
         }
 
-        commands.addFirst(command);
+        commands.addLast(command);
     }
 
     public void undo() {
@@ -23,7 +23,7 @@ public class MacroCommand implements Command {
             return;
         }
 
-        commands.removeFirst();
+        commands.removeLast();
     }
 
     public void clear() {

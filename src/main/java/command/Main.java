@@ -21,6 +21,7 @@ public class Main extends JFrame {
     private final JButton colorRedButton = new JButton("Red");
     private final JButton colorGreenButton = new JButton("Green");
     private final JButton clearButton = new JButton("Clear");
+    private final JButton undoButton = new JButton("Undo");
 
     public Main(String title) throws HeadlessException {
         super(title);
@@ -57,10 +58,16 @@ public class Main extends JFrame {
             colorCommand.execute();
         });
 
+        undoButton.addActionListener(e -> {
+            history.undo();
+            canvas.repaint();
+        });
+
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(clearButton);
         buttonBox.add(colorRedButton);
         buttonBox.add(colorGreenButton);
+        buttonBox.add(undoButton);
 
         Box mainBox = new Box(BoxLayout.Y_AXIS);
         mainBox.add(buttonBox);
