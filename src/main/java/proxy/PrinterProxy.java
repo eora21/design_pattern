@@ -1,16 +1,21 @@
 package proxy;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 public class PrinterProxy implements Printable {
+    private static final String PATH = "proxy.";
+    private final String className;
     private String name;
-    private Printer real;
+    private Printable real;
 
-    public PrinterProxy() {
+    public PrinterProxy(String className) {
+        this.className = className;
         this.name = "No Name";
     }
 
-    public PrinterProxy(String name) {
+    public PrinterProxy(String className, String name) {
+        this.className = className;
         this.name = name;
     }
 
@@ -35,8 +40,20 @@ public class PrinterProxy implements Printable {
     }
 
     private synchronized void realize() {
-        if (Objects.isNull(real)) {
-            real = new Printer(name);
+        if (Objects.nonNull(real)) {
+            return;
+        }
+
+        try {
+            real = (Printable) Class.forName(PATH + className)
+                    .getDeclaredConstructor()
+                    .newInstance();
+
+            real.setPrinterName(name);
+
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 }
