@@ -6,15 +6,14 @@ import command.drawer.DrawCommand;
 import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Main extends JFrame implements WindowListener {
+public class Main extends JFrame {
     private final MacroCommand history = new MacroCommand();
     private final DrawCanvas canvas = new DrawCanvas(400, 400, history);
     private final JButton clearButton = new JButton("Clear");
@@ -22,7 +21,12 @@ public class Main extends JFrame implements WindowListener {
     public Main(String title) throws HeadlessException {
         super(title);
 
-        this.addWindowListener(this);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         canvas.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -49,42 +53,7 @@ public class Main extends JFrame implements WindowListener {
         setVisible(true);
     }
 
-    @Override
-    public void windowClosing(WindowEvent e) {
-        System.exit(0);
-    }
-
     public static void main(String[] args) {
         new Main("Command Pattern Sample");
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
     }
 }
