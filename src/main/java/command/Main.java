@@ -1,8 +1,10 @@
 package command;
 
 import command.command.MacroCommand;
+import command.drawer.ColorCommand;
 import command.drawer.DrawCanvas;
 import command.drawer.DrawCommand;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -16,6 +18,8 @@ import javax.swing.JFrame;
 public class Main extends JFrame {
     private final MacroCommand history = new MacroCommand();
     private final DrawCanvas canvas = new DrawCanvas(400, 400, history);
+    private final JButton colorRedButton = new JButton("Red");
+    private final JButton colorGreenButton = new JButton("Green");
     private final JButton clearButton = new JButton("Clear");
 
     public Main(String title) throws HeadlessException {
@@ -41,8 +45,22 @@ public class Main extends JFrame {
             canvas.repaint();
         });
 
+        colorRedButton.addActionListener(e -> {
+            ColorCommand colorCommand = new ColorCommand(canvas, Color.RED);
+            history.append(colorCommand);
+            colorCommand.execute();
+        });
+
+        colorGreenButton.addActionListener(e -> {
+            ColorCommand colorCommand = new ColorCommand(canvas, Color.GREEN);
+            history.append(colorCommand);
+            colorCommand.execute();
+        });
+
         Box buttonBox = new Box(BoxLayout.X_AXIS);
         buttonBox.add(clearButton);
+        buttonBox.add(colorRedButton);
+        buttonBox.add(colorGreenButton);
 
         Box mainBox = new Box(BoxLayout.Y_AXIS);
         mainBox.add(buttonBox);

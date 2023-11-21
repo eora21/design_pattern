@@ -27,4 +27,9 @@ public class DrawCanvas extends Canvas implements Drawable {
         graphics.setColor(color);
         graphics.fillOval(x - radius, y - radius, radius * 2, radius * 2);
     }
+
+    @Override
+    public void updateColor(Color color) {
+        this.color = color;
+    }
 }
